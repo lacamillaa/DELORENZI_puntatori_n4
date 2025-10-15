@@ -8,7 +8,6 @@ short int inserisciVoto() {
     int i = 0;
     while (i < 3) {
         char c = (char)getchar();
-        printf("%d %d\n",i, c);
         *(v + i) = c;
         if (c == 10) {
             break;
@@ -18,10 +17,32 @@ short int inserisciVoto() {
     *(v + i) = 0;
     long res = strtol(v, &endptr, 10);
     if (*endptr != '\0' || res < 1 || res > 10) {
-        res = -1;
+        res = -2;
     }
     free(v);
     v = NULL;
+    return (short int)res;
+}
+
+short int inserisciPresenza() {
+    char* num = (char*)malloc(sizeof(char) * 3);
+    char* endptr;
+    int i = 0;
+    while (i < 3) {
+        char c = (char)getchar();
+        *(num + i) = c;
+        if (c == 10) {
+            break;
+        }
+        i++;
+    }
+    *(num + i) = 0;
+    long res = strtol(num, &endptr, 10);
+    if (endptr != 0 || res < -1 || res > 1) {
+        res = -2;
+    }
+    free(num);
+    num = NULL;
     return (short int)res;
 }
 
