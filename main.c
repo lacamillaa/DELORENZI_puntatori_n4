@@ -38,7 +38,7 @@ short int inserisciPresenza() {
     }
     *(num + i) = 0;
     long res = strtol(num, &endptr, 10);
-    if (endptr != 0 || res < -1 || res > 1) {
+    if (*endptr != 0 || res < -1 || res > 1) {
         res = -2;
     }
     free(num);
@@ -55,13 +55,17 @@ int main(void) {
     int* rePresenze = NULL;
     int* reVoti = NULL;
     do {
-        short int v = inserisciVoto();
-        printf("res: %d\n", v);
-        // chiedi la presenza (-1 = F, 0 = A, 1 = P)
-        // se F => esci dal while
-        // altrimenti: aumenta nGiorni e realloca rePresenze
-        // se A => aumenta la streakAssenze
-        // se P => annulla la streakAssenze + chiede voti + realloca reVoti
+        printf("Giorno %d\n",nGiorni + 1);
+        short int presenza;
+        do {
+            printf("Lo studente era presente oggi? (-1 = F / 0 = A / 1 = P) ");
+            presenza = inserisciPresenza();
+        } while (presenza == -2);
+        if (presenza != -1) {
+            // aumenta nGiorni e realloca rePresenze
+            // se A => aumenta la streakAssenze
+            // se P => annulla la streakAssenze + chiede voti + realloca reVoti
+        }
     }
     while (rePresenze != NULL && reVoti != NULL && cmd >= 0);
     // stampa tutti i voti, fa i calcoli necessari
