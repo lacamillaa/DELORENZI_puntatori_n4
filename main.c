@@ -2,15 +2,40 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+short int inserisciVoto() {
+    char* v = (char*)malloc(sizeof(char) * 3);
+    char* endptr;
+    int i = 0;
+    while (i < 3) {
+        char c = (char)getchar();
+        printf("%d %d\n",i, c);
+        *(v + i) = c;
+        if (c == 10) {
+            break;
+        }
+        i++;
+    }
+    *(v + i) = 0;
+    long res = strtol(v, &endptr, 10);
+    if (*endptr != '\0' || res < 1 || res > 10) {
+        res = -1;
+    }
+    free(v);
+    v = NULL;
+    return (short int)res;
+}
+
 int main(void) {
-    int cmd = 0;
+    int cmd = -1;
     int nGiorni = 0;
     int streakAssenze = 0;
     int* presenze = NULL;
-    float* voti = NULL;
+    int* voti = NULL;
     int* rePresenze = NULL;
     int* reVoti = NULL;
     do {
+        short int v = inserisciVoto();
+        printf("res: %d\n", v);
         // chiedi la presenza (-1 = F, 0 = A, 1 = P)
         // se F => esci dal while
         // altrimenti: aumenta nGiorni e realloca rePresenze
@@ -19,6 +44,5 @@ int main(void) {
     }
     while (rePresenze != NULL && reVoti != NULL && cmd >= 0);
     // stampa tutti i voti, fa i calcoli necessari
-    printf("Hello, World!\n");
     return 0;
 }
